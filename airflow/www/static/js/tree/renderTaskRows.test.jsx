@@ -117,7 +117,6 @@ const Wrapper = ({ children }) => {
 
 describe('Test renderTaskRows', () => {
   test('Group defaults to closed but clicking on the name will open a group', () => {
-    global.treeData = mockTreeData;
     const dagRunIds = mockTreeData.dagRuns.map((dr) => dr.runId);
     const task = mockTreeData.groups;
 
@@ -140,30 +139,6 @@ describe('Test renderTaskRows', () => {
   });
 
   test('Still renders names if there are no instances', () => {
-    global.treeData = {
-      groups: {
-        id: null,
-        label: null,
-        children: [
-          {
-            extraLinks: [],
-            id: 'group_1',
-            label: 'group_1',
-            instances: [],
-            children: [
-              {
-                id: 'group_1.task_1',
-                label: 'group_1.task_1',
-                extraLinks: [],
-                instances: [],
-              },
-            ],
-          },
-        ],
-        instances: [],
-      },
-      dagRuns: [],
-    };
     const task = mockTreeData.groups;
 
     const { queryByTestId, getByText } = render(

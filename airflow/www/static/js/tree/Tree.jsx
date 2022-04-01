@@ -120,7 +120,7 @@ const Tree = () => {
             </Thead>
             {/* TODO: remove hardcoded values. 665px is roughly the total heade+footer height */}
             <Tbody display="block" width="100%" maxHeight="calc(100vh - 665px)" minHeight="500px" ref={tableRef} pr="10px">
-              {renderTaskRows({
+              {groups.children && renderTaskRows({
                 task: groups, dagRunIds, tableWidth,
               })}
             </Tbody>

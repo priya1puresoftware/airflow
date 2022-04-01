@@ -17,7 +17,7 @@
  * under the License.
  */
 
-/* global describe, test, expect */
+/* global describe, test, jest, expect */
 
 import React from 'react';
 import { render } from '@testing-library/react';
@@ -30,8 +30,12 @@ import { ContainerRefProvider } from '../context/containerRef';
 import { SelectionProvider } from '../context/selection';
 import { TimezoneProvider } from '../context/timezone';
 import { AutoRefreshProvider } from '../context/autorefresh';
+import { useTreeData } from '../api';
+
+jest.mock('../api');
 
 global.moment = moment;
+global.autoRefreshInterval = 0;
 
 const Wrapper = ({ children }) => {
   const queryClient = new QueryClient();
@@ -80,13 +84,37 @@ describe('Test DagRuns', () => {
       runType: 'manual',
       startDate: '2021-11-09T00:19:43.023200+00:00',
       endDate: '2021-11-09T00:22:18.607167+00:00',
+      executionDate: '2021-11-08T21:14:19.704433+00:00',
+    },
+    {
+      dagId: 'dagId',
+      runId: 'run3',
+      dataIntervalStart: new Date(),
+      dataIntervalEnd: new Date(),
+      startDate: '2021-11-08T21:14:19.704433+00:00',
+      endDate: '2021-11-08T21:17:13.206426+00:00',
+      state: 'failed',
+      runType: 'scheduled',
+      executionDate: '2021-11-08T21:14:19.704433+00:00',
+    },
+    {
+      dagId: 'dagId',
+      runId: 'run4',
+      dataIntervalStart: new Date(),
+      dataIntervalEnd: new Date(),
+      state: 'success',
+      runType: 'manual',
+      startDate: '2021-11-09T00:19:43.023200+00:00',
+      endDate: '2021-11-09T00:22:18.607167+00:00',
+      executionDate: '2021-11-08T21:14:19.704433+00:00',
     },
   ];
 
   test('Durations and manual run arrow render correctly, but without any date ticks', () => {
-    global.treeData = JSON.stringify({
-      groups: {},
-      dagRuns,
+    useTreeData.mockReturnValue({
+      data: {
+        dagRuns: dagRuns.slice(0, 2),
+      },
     });
     const { queryAllByTestId, getByText, queryByText } = render(
       <DagRuns />, { wrapper: Wrapper },
@@ -100,51 +128,19 @@ describe('Test DagRuns', () => {
   });
 
   test('Top date ticks appear when there are 4 or more runs', () => {
-    global.treeData = JSON.stringify({
-      groups: {},
-      dagRuns: [
-        ...dagRuns,
-        {
-          dagId: 'dagId',
-          runId: 'run3',
-          dataIntervalStart: new Date(),
-          dataIntervalEnd: new Date(),
-          startDate: '2021-11-08T21:14:19.704433+00:00',
-          endDate: '2021-11-08T21:17:13.206426+00:00',
-          state: 'failed',
-          runType: 'scheduled',
-        },
-        {
-          dagId: 'dagId',
-          runId: 'run4',
-          dataIntervalStart: new Date(),
-          dataIntervalEnd: new Date(),
-          state: 'success',
-          runType: 'manual',
-          startDate: '2021-11-09T00:19:43.023200+00:00',
-          endDate: '2021-11-09T00:22:18.607167+00:00',
-        },
-      ],
+    useTreeData.mockReturnValue({
+      data: {
+        dagRuns,
+      },
     });
     const { getByText } = render(
       <DagRuns />, { wrapper: Wrapper },
     );
-    expect(getByText(moment.utc(dagRuns[0].executionDate).format('MMM DD, HH:mm'))).toBeInTheDocument();
-  });
-
-  test('Handles empty data correctly', () => {
-    global.treeData = {
-      groups: {},
-      dagRuns: [],
-    };
-    const { queryByTestId } = render(
-      <DagRuns />, { wrapper: Wrapper },
-    );
-    expect(queryByTestId('run')).toBeNull();
+    expect(getByText(moment.utc('2021-11-08T21:14:19.704433+00:00').format('MMM DD, HH:mm'))).toBeInTheDocument();
   });
 
   test('Handles no data correctly', () => {
-    global.treeData = {};
+    useTreeData.mockReturnValue({ data: {} });
     const { queryByTestId } = render(
       <DagRuns />, { wrapper: Wrapper },
     );

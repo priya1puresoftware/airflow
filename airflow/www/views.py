@@ -2530,7 +2530,6 @@ class Airflow(AirflowBaseView):
             .all()
         )
         dag_runs.reverse()
-        encoded_runs = [wwwutils.encode_dag_run(dr) for dr in dag_runs]
         dag_run_dates = {dr.execution_date: alchemy_to_dict(dr) for dr in dag_runs}
 
         max_date = max(dag_run_dates, default=None)
@@ -2550,18 +2549,6 @@ class Airflow(AirflowBaseView):
         else:
             external_log_name = None
 
-        min_date = min(dag_run_dates, default=None)
-
-        tis = dag.get_task_instances(start_date=min_date, end_date=base_date, session=session)
-
-        data = {
-            'groups': task_group_to_tree(dag.task_group, dag, dag_runs, tis, session),
-            'dag_runs': encoded_runs,
-        }
-
-        # avoid spaces to reduce payload size
-        data = htmlsafe_json_dumps(data, separators=(',', ':'))
-
         return self.render_template(
             'airflow/tree.html',
             operators=sorted({op.task_type: op for op in dag.tasks}.values(), key=lambda x: x.task_type),
@@ -2569,7 +2556,6 @@ class Airflow(AirflowBaseView):
             form=form,
             dag=dag,
             doc_md=doc_md,
-            data=data,
             num_runs=num_runs,
             show_external_log_redirect=task_log_reader.supports_external_link,
             external_log_name=external_log_name,
@@ -3429,7 +3415,6 @@ class Airflow(AirflowBaseView):
                 'dag_runs': encoded_runs,
             }
 
-        # avoid spaces to reduce payload size
         return htmlsafe_json_dumps(data, separators=(',', ':'))
 
     @expose('/robots.txt')

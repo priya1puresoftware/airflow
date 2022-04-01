@@ -17,13 +17,13 @@
  * under the License.
  */
 
-/* global treeData, autoRefreshInterval, fetch */
+/* global autoRefreshInterval */
 
 import { useQuery } from 'react-query';
+import axios from 'axios';
 
 import { getMetaValue } from '../../utils';
 import { useAutoRefresh } from '../context/autorefresh';
-import { formatData, areActiveRuns } from '../treeDataUtils';
 
 // dagId comes from dag.html
 const dagId = getMetaValue('dag_id');
@@ -32,25 +32,23 @@ const numRuns = getMetaValue('num_runs');
 const urlRoot = getMetaValue('root');
 const baseDate = getMetaValue('base_date');
 
+const areActiveRuns = (runs) => runs.filter((run) => ['queued', 'running', 'scheduled'].includes(run.state)).length > 0;
+
 const useTreeData = () => {
   const emptyData = {
     dagRuns: [],
     groups: {},
   };
-  const initialData = formatData(treeData, emptyData);
   const { isRefreshOn, stopRefresh } = useAutoRefresh();
   return useQuery('treeData', async () => {
     try {
       const root = urlRoot ? `&root=${urlRoot}` : '';
       const base = baseDate ? `&base_date=${baseDate}` : '';
-      const resp = await fetch(`${treeDataUrl}?dag_id=${dagId}&num_runs=${numRuns}${root}${base}`);
-      if (resp) {
-        let newData = await resp.json();
-        newData = formatData(newData);
-        // turn off auto refresh if there are no active runs
-        if (!areActiveRuns(newData.dagRuns)) stopRefresh();
-        return newData;
-      }
+      const data = await axios.get(`${treeDataUrl}?dag_id=${dagId}&num_runs=${numRuns}${root}${base}`);
+      if (!data || !data.dagRuns) return emptyData;
+      // turn off auto refresh if there are no active runs
+      if (!areActiveRuns(data.dagRuns)) stopRefresh();
+      return data;
     } catch (e) {
       stopRefresh();
       console.error(e);
@@ -61,9 +59,9 @@ const useTreeData = () => {
     };
   }, {
     // only enabled and refetch if the refresh switch is on
-    enabled: isRefreshOn,
+    // enabled: isRefreshOn,
     refetchInterval: isRefreshOn && autoRefreshInterval * 1000,
-    initialData,
+    initialData: emptyData,
   });
 };
 
