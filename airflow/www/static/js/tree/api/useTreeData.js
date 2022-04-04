@@ -53,13 +53,9 @@ const useTreeData = () => {
       stopRefresh();
       console.error(e);
     }
-    return {
-      groups: {},
-      dagRuns: [],
-    };
+    return emptyData;
   }, {
     // only enabled and refetch if the refresh switch is on
-    // enabled: isRefreshOn,
     refetchInterval: isRefreshOn && autoRefreshInterval * 1000,
     initialData: emptyData,
   });

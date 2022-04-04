@@ -32,6 +32,7 @@ import {
   Flex,
   useDisclosure,
   Button,
+  Progress,
 } from '@chakra-ui/react';
 
 import { useTreeData } from './api';
@@ -47,7 +48,7 @@ const sidePanelKey = 'showSidePanel';
 const Tree = () => {
   const scrollRef = useRef();
   const tableRef = useRef();
-  const [tableWidth, setTableWidth] = useState('100%');
+  const [tableWidth, setTableWidth] = useState();
   const { data: { groups = {}, dagRuns = [] } } = useTreeData();
   const { isRefreshOn, toggleRefresh, isPaused } = useAutoRefresh();
   const isPanelOpen = JSON.parse(localStorage.getItem(sidePanelKey));
@@ -67,15 +68,15 @@ const Tree = () => {
   const dagRunIds = dagRuns.map((dr) => dr.runId);
 
   useEffect(() => {
-    if (tableRef && tableRef.current) {
+    if (tableRef && tableRef.current && dagRuns.length > 0) {
       setTableWidth(tableRef.current.offsetWidth);
       const runsContainer = scrollRef.current;
       // Set initial scroll to top right if it is scrollable
       if (runsContainer && runsContainer.scrollWidth > runsContainer.clientWidth) {
-        runsContainer.scrollBy(runsContainer.clientWidth, 0);
+        runsContainer.scrollBy(runsContainer.scrollWidth, 0);
       }
     }
-  }, [tableRef, isOpen]);
+  }, [tableRef, scrollRef, isOpen, dagRuns]);
 
   return (
     <Box>
@@ -114,12 +115,13 @@ const Tree = () => {
           flexGrow={1}
           minWidth={isOpen && '300px'}
         >
-          <Table>
-            <Thead display="block" pr="10px" position="sticky" top={0} zIndex={2} bg="white">
+          {!tableWidth && <Progress isIndeterminate />}
+          <Table visibility={tableWidth ? 'visible' : 'hidden'}>
+            <Thead pr="10px" position="sticky" top={0} zIndex={2} bg="white" display="block">
               <DagRuns tableWidth={tableWidth} />
             </Thead>
-            {/* TODO: remove hardcoded values. 665px is roughly the total heade+footer height */}
-            <Tbody display="block" width="100%" maxHeight="calc(100vh - 665px)" minHeight="500px" ref={tableRef} pr="10px">
+            {/* TODO: remove hardcoded values. 665px is roughly the total header+footer height */}
+            <Tbody width="100%" maxHeight="calc(100vh - 665px)" minHeight="500px" ref={tableRef} pr="10px" display="block">
               {groups.children && renderTaskRows({
                 task: groups, dagRunIds, tableWidth,
               })}
