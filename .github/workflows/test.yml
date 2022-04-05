@@ -25,7 +25,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .
-        python -m pip install pytest freezegun filelock celery kubernetes boto3 moto apache-airflow-breeze parameterized sentry-sdk statsd distributed psycopg2 requests-mock oss2 google-api-core docker watchtower mypy-boto3-rds pandas google-api-python-client bson paramiko cassandra-driver sqlparse pydruid hdfs kylinpy pinotdb pyspark python-arango asana cloudant databricks datadog elasticsearch PyGithub httplib2 presto-python-client zenpy vertica-python telegram tableauserverclient sshtunnel snowflake slack-sdk pysftp sendgrid spython trino yandexcloud cgroupspy bs4 MySQL-python Flask-MySQLdb grpcio redshift-connector jsonpath-ng pyexasol facebook-business
+        python -m pip install pytest freezegun filelock celery kubernetes boto3 moto apache-airflow-breeze parameterized sentry-sdk statsd distributed psycopg2 requests-mock oss2 google-api-core docker watchtower mypy-boto3-rds pandas google-api-python-client bson paramiko cassandra-driver sqlparse pydruid hdfs kylinpy pinotdb pyspark python-arango asana cloudant databricks datadog elasticsearch PyGithub httplib2 presto-python-client zenpy vertica-python telegram tableauserverclient sshtunnel snowflake slack-sdk pysftp sendgrid spython trino yandexcloud cgroupspy bs4 Flask-MySQLdb grpcio redshift-connector jsonpath-ng pyexasol facebook-business qds_sdk simple-salesforce 
     - name: test      
       run: |
         pytest
