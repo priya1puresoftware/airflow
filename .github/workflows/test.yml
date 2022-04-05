@@ -26,7 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         python setup.py install
         pip install .
-        pip install pytest celery filelock freezegun  kubernetes  boto3 moto qds_sdk redis pandas parameterized analytics sendgrid paramiko slack_sdk snowflake tableauserverclient telegram google.api_core vertica_python numpy yandexcloud zenpy cgroupspy
+        pip install pytest celery filelock freezegun  kubernetes  boto3 moto qds_sdk pandas parameterized analytics sendgrid paramiko slack_sdk snowflake tableauserverclient telegram google.api_core vertica_python numpy yandexcloud zenpy cgroupspy
         
     - name: test      
       run: |
@@ -48,5 +48,5 @@ jobs:
               python3 -m pip install --upgrade pip && \
               python setup.py install && \
               pip install . && \
-              pip install pytest celery filelock freezegun  kubernetes  boto3 moto qds_sdk redis pandas parameterized analytics sendgrid paramiko slack_sdk snowflake tableauserverclient telegram google.api_core vertica_python numpy yandexcloud zenpy cgroupspy && \
+              pip install pytest celery filelock freezegun  kubernetes  boto3 moto qds_sdk pandas parameterized analytics sendgrid paramiko slack_sdk snowflake tableauserverclient telegram google.api_core vertica_python numpy yandexcloud zenpy cgroupspy && \
               deactivate'
