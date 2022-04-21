@@ -43,20 +43,18 @@ jobs:
         pip install snowflake slack-sdk pysftp sendgrid spython trino
         pip install yandexcloud cgroupspy bs4 grpcio redshift-connector 
         pip install jsonpath-ng pyexasol facebook-business qds_sdk simple-salesforce plyvel
-        pip install azure pandas-gbq google-cloud-secret-manager google-cloud-redis devtools 
-        pip install google-cloud-bigtable google-cloud-bigquery-datatransfer google-cloud-automl google-cloud-logging 
+        pip install pandas-gbq google-cloud-secret-manager google-cloud-redis devtools 
+        pip install google-cloud-bigtable google-cloud-bigquery-datatransfer google-cloud-logging 
         pip install google-cloud-container looker-sdk google-cloud-language 
         pip install google-cloud-orchestration-airflow google-cloud-os-login 
-        pip install google-cloud-workflows
+        pip install google-cloud-workflows google-cloud-automl
         pip install google-cloud-videointelligence google-cloud-datacatalog 
         pip install google-cloud-dataproc-metastore google-cloud-kms elasticsearch_dsl  
         pip install arango hmsclient 
-        pip install
         pip install docker distributed  
         pip install influxdb-client hvac  
-        pip install
+        pip install azureml-sdk
         pip install cassandra-driver  
-        pip install 
         sudo apt install unixodbc-dev --yes && pip install pyodbc
         sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
         pip install mysqlclient
