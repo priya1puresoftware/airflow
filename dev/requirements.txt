@@ -9,3 +9,4 @@ packaging
 rich
 rich_click
 tabulate
+google-cloud-storage
