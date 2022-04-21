@@ -27,10 +27,12 @@ jobs:
         python -m pip install --upgrade pip
         sudo apt-get install -y --no-install-recommends freetds-bin krb5-user ldap-utils libsasl2-2 libsasl2-modules libssl1.1 locales lsb-release sasl2-bin sqlite3 unixodbc
         python setup.py install
-        pip install apache-airflow pytest  freezegun filelock celery jira jenkins JayDeBeApi analytics google-cloud-bigquery  PySmbClient arrow pdpyras papermill cx-Oracle opsgenie-sdk neo4j  PyMongo pywinrm pypsrp 
+        pip install apache-airflow pytest freezegun filelock celery 
+        pip install jira jenkins JayDeBeApi analytics google-cloud-bigquery 
+        pip install PySmbClient arrow pdpyras papermill cx-Oracle opsgenie-sdk neo4j  PyMongo pywinrm pypsrp 
         pip install kubernetes cachetools smbprotocol future boto3
         pip install moto apache-airflow-breeze parameterized sentry-sdk
-        pip install statsd distributed psycopg2-binary requests-mock
+        pip install statsd psycopg2-binary requests-mock
         pip install oss2 google-api-core docker watchtower mypy-boto3-rds
         pip install cassandra-driver sqlparse pydruid hdfs
         pip install pandas google-api-python-client bson paramiko
@@ -41,7 +43,20 @@ jobs:
         pip install snowflake slack-sdk pysftp sendgrid spython trino
         pip install yandexcloud cgroupspy bs4 grpcio redshift-connector 
         pip install jsonpath-ng pyexasol facebook-business qds_sdk simple-salesforce plyvel
-        pip install azure apache-airflow-breeze sentry-sdk statsd distributed requests-mock oss2 google-api-core docker watchtower mypy-boto3-rds pandas google-api-python-client bson paramiko cassandra-driver sqlparse pydruid hdfs kylinpy pinotdb pyspark python-arango asana cloudant databricks datadog PyGithub presto-python-client telegram httplib2 sendgrid spython bs4 grpcio redshift-connector jsonpath-ng pyexasol facebook-business simple-salesforce plyvel pandas-gbq google-cloud-secret-manager 'datadog' google-cloud-redis devtools google-cloud-bigtable google-cloud-bigquery-datatransfer google-cloud-automl google-cloud-logging 'databricks' pyexasol google-cloud-container  looker-sdk google-cloud-language facebook-business google-cloud-orchestration-airflow google-cloud-os-login google-cloud-workflows google-cloud-automl  google-cloud-bigquery-datatransfer google-cloud-bigtable google-cloud-logging google-cloud-videointelligence google-cloud-datacatalog google-cloud-dataproc-metastore google-cloud-kms PyGithub 'elasticsearch_dsl' cloudant arango pyspark smbprotocol hmsclient  hdfs cassandra-driver pyexasol apache-airflow-breeze jsonpath-ng mypy-boto3-rds redshift-connector google-cloud-bigtable watchtower docker oss2 statsd distributed sentry-sdk pydruid kylinpy pinotdb asana influxdb-client hvac  watchtower docker oss2 sentry-sdk apache-airflow-breeze mypy-boto3-rds jsonpath-ng pyexasol cassandra-driver pydruid hmsclient kylinpy smbprotocol sqlparse
+        pip install azure pandas-gbq google-cloud-secret-manager google-cloud-redis devtools 
+        pip install google-cloud-bigtable google-cloud-bigquery-datatransfer google-cloud-automl google-cloud-logging 
+        pip install google-cloud-container looker-sdk google-cloud-language 
+        pip install google-cloud-orchestration-airflow google-cloud-os-login 
+        pip install google-cloud-workflows
+        pip install google-cloud-videointelligence google-cloud-datacatalog 
+        pip install google-cloud-dataproc-metastore google-cloud-kms elasticsearch_dsl  
+        pip install arango hmsclient 
+        pip install
+        pip install docker distributed  
+        pip install influxdb-client hvac  
+        pip install
+        pip install cassandra-driver  
+        pip install 
         sudo apt install unixodbc-dev --yes && pip install pyodbc
         sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
         pip install mysqlclient
@@ -50,23 +65,3 @@ jobs:
       run: |
        pthon -m pytest
 
-  armv64_job:
-    name: Build and Test for arm64
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up QEMU
-        id: qemu
-        uses: docker/setup-qemu-action@v1
-      - name: Install and Run tests
-        run: |
-           docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
-             arm64v8/ubuntu:20.04 \
-              bash -exc 'apt-get update && apt-get -y install git python3 python3-pip && apt-get install -y language-pack-en && export LC_CTYPE=en_US.UTF-8 && apt-get -y install locales && \
-              pip3 install --upgrade setuptools && \
-              python3 -m pip install -U pip && \
-              pip3 install ez_setup && \
-              pip3 install . && \
-              python3 -m pip install pytest freezegun filelock celery kubernetes  boto3 moto apache-airflow-breeze apache-airflow-breeze parameterized sentry-sdk statsd distributed psycopg2-binary requests-mock oss2 google-api-core docker watchtower mypy-boto3-rds pandas google-api-python-client bson paramiko cassandra-driver sqlparse pydruid hdfs kylinpy pinotdb pyspark python-arango asana cloudant databricks datadog elasticsearch PyGithub httplib2 presto-python-client zenpy vertica-python telegram tableauserverclient sshtunnel snowflake slack-sdk pysftp sendgrid spython trino yandexcloud cgroupspy bs4 Flask-MySQLdb grpcio redshift-connector jsonpath-ng pyexasol facebook-business qds_sdk simple-salesforce plyvel && \
-              pytest && \
-              deactivate'
