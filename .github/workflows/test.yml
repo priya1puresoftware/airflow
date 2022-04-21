@@ -27,7 +27,7 @@ jobs:
         python -m pip install --upgrade pip
         sudo apt-get install -y --no-install-recommends freetds-bin krb5-user ldap-utils libsasl2-2 libsasl2-modules libssl1.1 locales lsb-release sasl2-bin sqlite3 unixodbc
         python setup.py install
-        pip install apache-airflow pytest freezegun
+        pip install apache-airflow pytest  freezegun filelock celery kubernetes boto3 moto apache-airflow-breeze parameterized sentry-sdk statsd distributed psycopg2-binary requests-mock oss2 google-api-core docker watchtower mypy-boto3-rds pandas google-api-python-client bson paramiko cassandra-driver sqlparse pydruid hdfs kylinpy pinotdb pyspark python-arango asana cloudant databricks datadog elasticsearch PyGithub httplib2 presto-python-client zenpy vertica-python telegram tableauserverclient sshtunnel snowflake slack-sdk pysftp sendgrid spython trino yandexcloud cgroupspy bs4 grpcio redshift-connector jsonpath-ng pyexasol facebook-business qds_sdk simple-salesforce plyvel
         
     - name: test      
       run: |
