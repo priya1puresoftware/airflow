@@ -55,10 +55,11 @@ jobs:
         pip install arango hmsclient azure-storage-blob sqlalchemy-databricks google-ads 
         pip install docker distributed google-cloud-dlp
         pip install influxdb-client hvac azure-mgmt-datafactory azure-cosmos
+        sudo apt install -y libkrb5-dev
         pip install azureml-sdk kerberos gapic-google-cloud-spanner-v1 
         pip install cassandra-driver sqlalchemy-databricks azure-keyvault
         sudo apt install unixodbc-dev --yes && pip install pyodbc azure-mgmt-containerinstance azure-batch
-        sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+        sudo apt-get install -y python3-dev default-libmysqlclient-dev build-essential
         pip install mysqlclient azure-datalake-store    
         pip install proto-google-cloud-language-v1 google-cloud-pubsub google-cloud-speech 
         
