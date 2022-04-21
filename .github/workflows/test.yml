@@ -61,5 +61,5 @@ jobs:
         
     - name: test      
       run: |
-       pthon -m pytest
+       python -m pytest
 
