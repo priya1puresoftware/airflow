@@ -27,7 +27,9 @@ jobs:
         python -m pip install --upgrade pip
         sudo apt-get install -y --no-install-recommends freetds-bin krb5-user ldap-utils libsasl2-2 libsasl2-modules libssl1.1 locales lsb-release sasl2-bin sqlite3 unixodbc
         python setup.py install
-        pip install apache-airflow pytest freezegun filelock celery 
+        pip install --upgrade google-cloud-storage
+        pip install --force-reinstall python-telegram-bot
+        pip install apache-airflow pytest freezegun filelock celery
         pip install jira jenkins JayDeBeApi analytics google-cloud-bigquery 
         pip install PySmbClient arrow pdpyras papermill cx-Oracle opsgenie-sdk neo4j  PyMongo pywinrm pypsrp 
         pip install kubernetes cachetools smbprotocol future boto3
@@ -50,14 +52,15 @@ jobs:
         pip install google-cloud-workflows google-cloud-automl
         pip install google-cloud-videointelligence google-cloud-datacatalog 
         pip install google-cloud-dataproc-metastore google-cloud-kms elasticsearch_dsl  
-        pip install arango hmsclient 
-        pip install docker distributed  
-        pip install influxdb-client hvac  
-        pip install azureml-sdk
-        pip install cassandra-driver  
-        sudo apt install unixodbc-dev --yes && pip install pyodbc
+        pip install arango hmsclient azure-storage sqlalchemy-databricks google-ads 
+        pip install docker distributed google-cloud-dlp
+        pip install influxdb-client hvac azure-mgmt-datafactory azure-cosmos
+        pip install azureml-sdk kerberos gapic-google-cloud-spanner-v1 
+        pip install cassandra-driver sqlalchemy-databricks azure-keyvault
+        sudo apt install unixodbc-dev --yes && pip install pyodbc azure-mgmt-containerinstance azure-batch
         sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
-        pip install mysqlclient
+        pip install mysqlclient azure-storage azure-datalake-store    
+        pip install proto-google-cloud-language-v1 google-cloud-pubsub google-cloud-speech 
         
     - name: test      
       run: |
