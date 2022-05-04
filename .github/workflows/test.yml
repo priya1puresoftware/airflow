@@ -30,8 +30,9 @@ jobs:
         pip install .
         python setup.py install
         pip install pytest
-        pip install .[async,google,amazon] \ --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-main/constraints-3.7.txt"   
-        
+        pip install .[async,google,amazon] \
+        --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-main/constraints-3.7.txt" 
+  
     - name: test      
       run: |
        python -m pytest
