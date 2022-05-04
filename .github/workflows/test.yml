@@ -32,8 +32,9 @@ jobs:
         pip install pytest
         pip install .[async,google,amazon] \
         --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-main/constraints-3.7.txt" 
+        pip3 install freezegun setproctitle lockfile pendulum werkzeug inflection httpx lazy_object_proxy tenacity croniter sqlalchemy_jsonfield psutil openapi_spec_validator jinja2 pygments cryptography colorlog flask cattrs dill tabulate flask_appbuilder flask_caching python-nvd3 markdown blinker marshmallow_oneofschema pytest
   
     - name: test      
       run: |
-       python -m pytest
+       pytest
 
