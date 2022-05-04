@@ -29,7 +29,7 @@ jobs:
         sudo apt-get install libmariadb-dev libmariadbclient-dev
         pip install .
         python setup.py install
-        pip install pytest
+        pip install pytest apache-airflow-breeze
         pip install .[async,google,amazon] \
         --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-main/constraints-3.7.txt" 
         pip install 'apache-airflow[postgres,google]==2.3.0' \
