@@ -60,7 +60,7 @@ jobs:
         pip install cassandra-driver sqlalchemy-databricks azure-keyvault
         sudo apt install unixodbc-dev --yes && pip install pyodbc azure-mgmt-containerinstance azure-batch
         pip install mysqlclient azure-datalake-store pdpyras cx-Oracle opsgenie-sdk
-        pip install proto-google-cloud-language-v1 google-cloud-pubsub google-cloud-speech redis arrow analytics papermill
+        pip install proto-google-cloud-language-v1 google-cloud-pubsub google-cloud-speech arrow analytics papermill
     - name: test      
       run: |
        pytest
