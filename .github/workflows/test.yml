@@ -53,7 +53,7 @@ jobs:
         pip install google-cloud-videointelligence google-cloud-datacatalog 
         pip install google-cloud-dataproc-metastore google-cloud-kms elasticsearch_dsl  
         pip install arango hmsclient azure-storage-blob sqlalchemy-databricks google-ads 
-        pip install docker distributed google-cloud-dlp neo4j pymongo winrm
+        pip install docker distributed google-cloud-dlp neo4j pymongo pywinrm
         pip install influxdb-client hvac azure-mgmt-datafactory azure-cosmos azure-storage-file 
         sudo apt install -y libkrb5-dev 
         pip install azureml-sdk kerberos gapic-google-cloud-spanner-v1 
